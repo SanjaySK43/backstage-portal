@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InfoCard } from '@backstage/core-components';
+import { useApi, alertApiRef } from '@backstage/core-plugin-api';
 import Button from '@mui/material/Button';
 
 type Build = {
@@ -10,6 +11,7 @@ type Build = {
 };
 
 export const DeploymentStatusComponent = () => {
+  const alertApi = useApi(alertApiRef);
   const [builds, setBuilds] = useState<Build[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,11 +26,11 @@ export const DeploymentStatusComponent = () => {
   }, []);
 
   const triggerBuild = () => {
-    alert('Triggering a new build... (connect to your CI API here)');
+    alertApi.post({ message: 'Triggering a new build... (connect to your CI API here)', severity: 'info' });
   };
 
   const rollbackBuild = (id: string) => {
-    alert(`Rolling back build ${id}... (connect to your CI API here)`);
+    alertApi.post({ message: `Rolling back build ${id}... (connect to your CI API here)`, severity: 'warning' });
   };
 
   if (loading) return <InfoCard title="Deployment Status">Loading...</InfoCard>;

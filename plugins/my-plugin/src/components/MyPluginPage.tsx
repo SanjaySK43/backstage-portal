@@ -1,4 +1,3 @@
-import React from 'react';
 import { MyDynamicDataComponent } from './MyDynamicDataComponent';
 import { ApiListComponent } from './ApiListComponent';
 import { DeploymentStatusComponent } from './DeploymentStatusComponent';
