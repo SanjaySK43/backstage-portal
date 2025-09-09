@@ -142,7 +142,7 @@ export const PipelineStatusComponent = () => {
   const viewRun = () => {
     // Since we're using mock data, redirect to the main GitHub Actions page
     // In a real implementation, this would use the actual run URL
-    const actionsUrl = `https://github.com/SanjaySK43/my-portal/actions`;
+    const actionsUrl = `https://github.com/SanjaySK43/backstage-portal/actions`;
     window.open(actionsUrl, '_blank');
   };
 
@@ -251,7 +251,7 @@ export const PipelineStatusComponent = () => {
       <Box mt={2}>
         <Button
           variant="outlined"
-          onClick={() => window.open('https://github.com/SanjaySK43/my-portal/actions', '_blank')}
+          onClick={() => window.open('https://github.com/SanjaySK43/backstage-portal/actions', '_blank')}
         >
           View all workflows on GitHub →
         </Button>

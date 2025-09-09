@@ -59,7 +59,7 @@ export const GitHubActionsComponent = () => {
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [loading, setLoading] = useState(true);
   const [owner] = useState('SanjaySK43');
-  const [repo] = useState('my-portal');
+  const [repo] = useState('backstage-portal');
 
   useEffect(() => {
     fetchWorkflows();
