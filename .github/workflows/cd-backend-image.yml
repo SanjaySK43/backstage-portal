@@ -43,6 +43,11 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Build plugins
+        run: |
+          yarn workspace @internal/plugin-my-dashboard build
+          yarn workspace @internal/plugin-my-plugin build
+
       - name: Generate TypeScript declarations
         run: yarn tsc
 
