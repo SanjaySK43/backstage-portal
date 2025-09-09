@@ -40,7 +40,7 @@ import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 import { NotificationsPage } from '@backstage/plugin-notifications';
 import { SignalsDisplay } from '@backstage/plugin-signals';
-import { MyPluginPage } from '@internal/plugin-my-plugin';
+import { MyPluginPage as MyPluginPageComponent } from '@internal/plugin-my-plugin/src/components/MyPluginPage';
 
 const app = createApp({
   apis,
@@ -116,7 +116,7 @@ const routes = (
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/notifications" element={<NotificationsPage />} />
     <Route path="/my-dashboard" element={<MyDashboardPage />} />
-    <Route path="/my-plugin" element={<MyPluginPage />} />
+    <Route path="/my-plugin" element={<MyPluginPageComponent />} />
   </FlatRoutes>
 );
 

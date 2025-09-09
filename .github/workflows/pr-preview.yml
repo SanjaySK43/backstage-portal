@@ -1,0 +1,56 @@
+name: PR Preview
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      deployments: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Corepack (Yarn)
+        run: |
+          corepack enable
+          corepack prepare yarn@4.4.1 --activate
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Generate TypeScript declarations
+        run: yarn tsc
+
+      - name: Build plugins
+        run: |
+          cd plugins/my-dashboard && npx backstage-cli package build --skip-build-dependencies
+          cd ../my-plugin && npx backstage-cli package build --skip-build-dependencies
+
+      - name: Build frontend
+        run: yarn workspace app build
+        env:
+          CI: false
+
+      - name: Deploy PR Preview
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './packages/app/dist'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "PR Preview #${{ github.event.number }}"
+          alias: pr-${{ github.event.number }}
+          enable-pull-request-comment: true
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

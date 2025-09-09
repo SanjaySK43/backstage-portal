@@ -29,16 +29,20 @@
     ]
   },
   "devDependencies": {
-    "@backstage/cli": "^0.34.0",
+    "@backstage/cli": "^0.34.1",
     "@backstage/e2e-test-utils": "^0.1.1",
     "@playwright/test": "^1.32.3",
+    "@types/react": "^17",
+    "@types/react-dom": "^17",
     "node-gyp": "^10.0.0",
     "prettier": "^2.3.2",
     "typescript": "~5.8.0"
   },
   "resolutions": {
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "prettier": "@backstage/cli/config/prettier",
   "lint-staged": {
@@ -50,5 +54,12 @@
       "prettier --write"
     ]
   },
-  "packageManager": "yarn@4.4.1"
+  "packageManager": "yarn@4.4.1",
+  "dependencies": {
+    "@mui/material": "^7.3.2",
+    "@mui/styles": "6.4.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.8.2"
+  }
 }

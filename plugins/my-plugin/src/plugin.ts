@@ -11,11 +11,9 @@ export const myPluginPlugin = createPlugin({
   },
 });
 
-export const MyPluginPage = myPluginPlugin.provide(
-  createRoutableExtension({
-    name: 'MyPluginPage',
-    component: () =>
-      import('./components/MyPluginPage').then(m => m.MyPluginPage),
-    mountPoint: rootRouteRef,
-  }),
-);
+export const MyPluginPage = createRoutableExtension({
+  name: 'MyPluginPage',
+  component: () =>
+    import('./components/MyPluginPage').then(m => m.MyPluginPage),
+  mountPoint: rootRouteRef,
+});
