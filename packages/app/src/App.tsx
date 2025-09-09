@@ -1,5 +1,5 @@
 import { Navigate, Route } from 'react-router-dom';
-// import { MyDashboardPage } from '@internal/plugin-my-dashboard';
+import { MyDashboardPage } from '@internal/plugin-my-dashboard';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
 
@@ -40,7 +40,6 @@ import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 import { NotificationsPage } from '@backstage/plugin-notifications';
 import { SignalsDisplay } from '@backstage/plugin-signals';
-import { MyDashboardPage } from '@internal/plugin-my-dashboard';
 import { MyPluginPage } from '@internal/plugin-my-plugin';
 
 const app = createApp({
