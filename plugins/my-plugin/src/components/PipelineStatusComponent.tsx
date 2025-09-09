@@ -98,8 +98,8 @@ export const PipelineStatusComponent = () => {
           head_branch: 'main',
           created_at: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 minutes ago
           updated_at: new Date(Date.now() - 3 * 60 * 1000).toISOString(), // 3 minutes ago
-          html_url: 'https://github.com/SanjaySK43/my-portal/actions/runs/1001',
-          head_sha: 'b2ad87c',
+          html_url: 'https://github.com/SanjaySK43/backstage-portal/actions/runs/1001',
+          head_sha: 'aa2acae',
           run_number: 15,
           event: 'push',
         },
@@ -111,23 +111,23 @@ export const PipelineStatusComponent = () => {
           head_branch: 'main',
           created_at: new Date(Date.now() - 15 * 60 * 1000).toISOString(), // 15 minutes ago
           updated_at: new Date(Date.now() - 13 * 60 * 1000).toISOString(), // 13 minutes ago
-          html_url: 'https://github.com/SanjaySK43/my-portal/actions/runs/1000',
-          head_sha: '05132f7',
+          html_url: 'https://github.com/SanjaySK43/backstage-portal/actions/runs/1000',
+          head_sha: '9df1324',
           run_number: 14,
           event: 'push',
         },
         {
           id: 999,
           name: 'Demo CI Pipeline',
-          status: 'in_progress',
-          conclusion: null,
-          head_branch: 'feature/demo',
-          created_at: new Date(Date.now() - 2 * 60 * 1000).toISOString(), // 2 minutes ago
-          updated_at: new Date(Date.now() - 1 * 60 * 1000).toISOString(), // 1 minute ago
-          html_url: 'https://github.com/SanjaySK43/my-portal/actions/runs/999',
-          head_sha: 'abc1234',
-          run_number: 16,
-          event: 'pull_request',
+          status: 'completed',
+          conclusion: 'success',
+          head_branch: 'main',
+          created_at: new Date(Date.now() - 25 * 60 * 1000).toISOString(), // 25 minutes ago
+          updated_at: new Date(Date.now() - 23 * 60 * 1000).toISOString(), // 23 minutes ago
+          html_url: 'https://github.com/SanjaySK43/backstage-portal/actions/runs/999',
+          head_sha: 'b2ad87c',
+          run_number: 13,
+          event: 'push',
         },
       ];
 

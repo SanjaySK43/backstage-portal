@@ -92,19 +92,23 @@ export const GitHubActionsComponent = () => {
 
   const triggerWorkflow = async (workflowName: string, workflowPath: string) => {
     try {
-      // Open GitHub Actions page to manually trigger workflow
+      // GitHub API endpoint for workflow_dispatch
+      // POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+      
+      // Open GitHub Actions page where user can manually trigger with "Run workflow" button
       const triggerUrl = `https://github.com/${owner}/${repo}/actions/workflows/${workflowPath.replace('.github/workflows/', '')}`;
       window.open(triggerUrl, '_blank');
       
       // Show success message
-      errorApi.post(new Error(`Opening GitHub Actions to trigger: ${workflowName}`));
+      errorApi.post(new Error(`Opening GitHub Actions to trigger: ${workflowName}. Click "Run workflow" button.`));
     } catch (error) {
       errorApi.post(new Error(`Failed to open workflow: ${error}`));
     }
   };
 
-  const viewWorkflowRuns = (workflowPath: string) => {
-    const runsUrl = `https://github.com/${owner}/${repo}/actions/workflows/${workflowPath.replace('.github/workflows/', '')}`;
+  const viewWorkflowRuns = () => {
+    // Navigate directly to all workflow runs for this repository
+    const runsUrl = `https://github.com/${owner}/${repo}/actions`;
     window.open(runsUrl, '_blank');
   };
 
@@ -179,7 +183,7 @@ export const GitHubActionsComponent = () => {
                   <Button
                     variant="outlined"
                     size="small"
-                    onClick={() => viewWorkflowRuns(workflow.path)}
+                    onClick={() => viewWorkflowRuns()}
                   >
                     View Runs
                   </Button>

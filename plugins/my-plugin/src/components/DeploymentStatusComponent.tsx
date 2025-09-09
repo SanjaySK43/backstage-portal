@@ -58,9 +58,9 @@ export const DeploymentStatusComponent = () => {
     try {
       // For demo purposes, using mock data that simulates GitHub Actions
       setBuilds([
-        { id: 'build-123', status: 'success', branch: 'main', timestamp: '2025-09-09T06:45:00Z', sha: 'abc1234', url: 'https://github.com/user/repo/actions/runs/123' },
-        { id: 'build-122', status: 'failure', branch: 'feature/ci-cd', timestamp: '2025-09-09T06:30:00Z', sha: 'def5678', url: 'https://github.com/user/repo/actions/runs/122' },
-        { id: 'build-121', status: 'in_progress', branch: 'feature/github-integration', timestamp: '2025-09-09T06:15:00Z', sha: 'ghi9012', url: 'https://github.com/user/repo/actions/runs/121' },
+        { id: 'build-123', status: 'success', branch: 'main', timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(), sha: '0baa9b8' },
+        { id: 'build-122', status: 'success', branch: 'main', timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(), sha: 'aa2acae' },
+        { id: 'build-121', status: 'success', branch: 'main', timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(), sha: '9df1324', url: 'https://github.com/SanjaySK43/backstage-portal/actions/runs/121' },
       ]);
     } catch (error) {
       errorApi.post(new Error(`Failed to fetch workflow runs: ${error}`));
@@ -70,19 +70,30 @@ export const DeploymentStatusComponent = () => {
   };
 
   const triggerBuild = async () => {
-    alertApi.post({ message: 'Triggering GitHub Actions workflow...', severity: 'info' });
+    try {
+      // Open GitHub Actions to trigger the workflow manually
+      const triggerUrl = `https://github.com/SanjaySK43/backstage-portal/actions/workflows/ci.yml`;
+      window.open(triggerUrl, '_blank');
+      
+      alertApi.post({ message: 'Opening GitHub Actions to trigger build. Click "Run workflow" button.', severity: 'success' });
+    } catch (error) {
+      errorApi.post(new Error(`Failed to open workflow: ${error}`));
+    }
     // In a real implementation, you would trigger a GitHub Actions workflow here
     // Example: POST to /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
   };
 
   const rollbackBuild = (id: string) => {
-    alertApi.post({ message: `Initiating rollback for build ${id}...`, severity: 'warning' });
+    // Open GitHub Actions to manually trigger a rollback workflow
+    const rollbackUrl = `https://github.com/SanjaySK43/backstage-portal/actions`;
+    window.open(rollbackUrl, '_blank');
+    alertApi.post({ message: `Opening GitHub Actions for rollback of build ${id}`, severity: 'warning' });
   };
 
-  const viewBuild = (url?: string) => {
-    if (url) {
-      window.open(url, '_blank');
-    }
+  const viewBuild = () => {
+    // Open GitHub Actions main page to view workflow runs
+    const viewUrl = `https://github.com/SanjaySK43/backstage-portal/actions`;
+    window.open(viewUrl, '_blank');
   };
 
   if (loading) return <InfoCard title="CI/CD Pipeline Status"><Progress /></InfoCard>;
@@ -115,7 +126,7 @@ export const DeploymentStatusComponent = () => {
           <Box className={classes.actions}>
             {build.url && (
               <Button 
-                onClick={() => viewBuild(build.url)} 
+                onClick={() => viewBuild()} 
                 variant="outlined" 
                 size="small"
               >
