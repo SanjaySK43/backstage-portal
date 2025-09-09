@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InfoCard, Progress, Link } from '@backstage/core-components';
-import { useApi, githubAuthApiRef, errorApiRef } from '@backstage/core-plugin-api';
+import { useApi, errorApiRef } from '@backstage/core-plugin-api';
 import { 
   Table, 
   TableBody, 
@@ -55,12 +55,11 @@ const getStatusColor = (state: string) => {
 
 export const GitHubActionsComponent = () => {
   const classes = useStyles();
-  const githubAuth = useApi(githubAuthApiRef);
   const errorApi = useApi(errorApiRef);
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [owner, setOwner] = useState('your-org');
-  const [repo, setRepo] = useState('my-portal');
+  const [owner] = useState('SanjaySK43');
+  const [repo] = useState('my-portal');
 
   useEffect(() => {
     fetchWorkflows();
@@ -72,47 +71,14 @@ export const GitHubActionsComponent = () => {
       const mockWorkflows: Workflow[] = [
         {
           id: 1,
-          name: 'CI',
+          name: 'Demo CI Pipeline',
           path: '.github/workflows/ci.yml',
           state: 'active',
           created_at: '2025-09-01T10:00:00Z',
           updated_at: '2025-09-09T06:45:00Z',
-          url: `https://api.github.com/repos/${owner}/${repo}/actions/workflows/1`,
+          url: `https://api.github.com/repos/${owner}/${repo}/actions/workflows/ci.yml`,
           html_url: `https://github.com/${owner}/${repo}/actions/workflows/ci.yml`,
-          badge_url: `https://github.com/${owner}/${repo}/workflows/CI/badge.svg`,
-        },
-        {
-          id: 2,
-          name: 'Build and Publish Backend Image',
-          path: '.github/workflows/cd-backend-image.yml',
-          state: 'active',
-          created_at: '2025-09-01T10:00:00Z',
-          updated_at: '2025-09-09T06:30:00Z',
-          url: `https://api.github.com/repos/${owner}/${repo}/actions/workflows/2`,
-          html_url: `https://github.com/${owner}/${repo}/actions/workflows/cd-backend-image.yml`,
-          badge_url: `https://github.com/${owner}/${repo}/workflows/Build%20and%20Publish%20Backend%20Image/badge.svg`,
-        },
-        {
-          id: 3,
-          name: 'Deploy Frontend to Netlify',
-          path: '.github/workflows/deploy-frontend.yml',
-          state: 'active',
-          created_at: '2025-09-09T12:00:00Z',
-          updated_at: '2025-09-09T12:00:00Z',
-          url: `https://api.github.com/repos/${owner}/${repo}/actions/workflows/3`,
-          html_url: `https://github.com/${owner}/${repo}/actions/workflows/deploy-frontend.yml`,
-          badge_url: `https://github.com/${owner}/${repo}/workflows/Deploy%20Frontend%20to%20Netlify/badge.svg`,
-        },
-        {
-          id: 4,
-          name: 'Security Scan',
-          path: '.github/workflows/security-scan.yml',
-          state: 'active',
-          created_at: '2025-09-09T12:00:00Z',
-          updated_at: '2025-09-09T12:00:00Z',
-          url: `https://api.github.com/repos/${owner}/${repo}/actions/workflows/4`,
-          html_url: `https://github.com/${owner}/${repo}/actions/workflows/security-scan.yml`,
-          badge_url: `https://github.com/${owner}/${repo}/workflows/Security%20Scan/badge.svg`,
+          badge_url: `https://github.com/${owner}/${repo}/workflows/Demo%20CI%20Pipeline/badge.svg`,
         },
       ];
 
@@ -124,21 +90,22 @@ export const GitHubActionsComponent = () => {
     }
   };
 
-  const triggerWorkflow = async (workflowId: number, workflowName: string) => {
+  const triggerWorkflow = async (workflowName: string, workflowPath: string) => {
     try {
-      // In a real implementation, you would dispatch a workflow event here
-      // POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
-      errorApi.post({ 
-        message: `Triggered workflow: ${workflowName}`, 
-        severity: 'success' 
-      });
+      // Open GitHub Actions page to manually trigger workflow
+      const triggerUrl = `https://github.com/${owner}/${repo}/actions/workflows/${workflowPath.replace('.github/workflows/', '')}`;
+      window.open(triggerUrl, '_blank');
+      
+      // Show success message
+      errorApi.post(new Error(`Opening GitHub Actions to trigger: ${workflowName}`));
     } catch (error) {
-      errorApi.post(new Error(`Failed to trigger workflow: ${error}`));
+      errorApi.post(new Error(`Failed to open workflow: ${error}`));
     }
   };
 
-  const viewWorkflowRuns = (htmlUrl: string) => {
-    window.open(htmlUrl, '_blank');
+  const viewWorkflowRuns = (workflowPath: string) => {
+    const runsUrl = `https://github.com/${owner}/${repo}/actions/workflows/${workflowPath.replace('.github/workflows/', '')}`;
+    window.open(runsUrl, '_blank');
   };
 
   if (loading) {
@@ -151,16 +118,16 @@ export const GitHubActionsComponent = () => {
 
   return (
     <InfoCard title="GitHub Actions Workflows">
-      <Box className={classes.workflowHeader}>
+      <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="body2" color="textSecondary">
           Repository: {owner}/{repo}
         </Typography>
-        <Button 
-          variant="outlined" 
-          size="small" 
-          onClick={fetchWorkflows}
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => fetchWorkflows()}
         >
-          Refresh
+          REFRESH
         </Button>
       </Box>
 
@@ -204,7 +171,7 @@ export const GitHubActionsComponent = () => {
                     variant="outlined"
                     size="small"
                     className={classes.actionButton}
-                    onClick={() => triggerWorkflow(workflow.id, workflow.name)}
+                    onClick={() => triggerWorkflow(workflow.name, workflow.path)}
                     disabled={workflow.state !== 'active'}
                   >
                     Trigger
@@ -212,7 +179,7 @@ export const GitHubActionsComponent = () => {
                   <Button
                     variant="outlined"
                     size="small"
-                    onClick={() => viewWorkflowRuns(workflow.html_url)}
+                    onClick={() => viewWorkflowRuns(workflow.path)}
                   >
                     View Runs
                   </Button>

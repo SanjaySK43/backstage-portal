@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InfoCard, Progress } from '@backstage/core-components';
-import { useApi, alertApiRef, githubAuthApiRef, errorApiRef } from '@backstage/core-plugin-api';
+import { useApi, alertApiRef, errorApiRef } from '@backstage/core-plugin-api';
 import { Button, Chip, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-type WorkflowRun = {
-  id: number;
-  name: string;
-  status: string;
-  conclusion: string | null;
-  head_branch: string;
-  created_at: string;
-  html_url: string;
-  head_sha: string;
-};
 
 type Build = {
   id: string;
@@ -56,7 +46,6 @@ const getStatusColor = (status: string) => {
 export const DeploymentStatusComponent = () => {
   const classes = useStyles();
   const alertApi = useApi(alertApiRef);
-  const githubAuth = useApi(githubAuthApiRef);
   const errorApi = useApi(errorApiRef);
   const [builds, setBuilds] = useState<Build[]>([]);
   const [loading, setLoading] = useState(true);

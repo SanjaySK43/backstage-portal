@@ -1,4 +1,3 @@
-import React from 'react';
 import { Grid } from '@material-ui/core';
 import {
   Header,
@@ -10,9 +9,10 @@ import {
 } from '@backstage/core-components';
 import { MyDynamicDataComponent } from './MyDynamicDataComponent';
 import { ApiListComponent } from './ApiListComponent';
-import { DeploymentStatusComponent } from './DeploymentStatusComponent';
 import { MyGitHubRepoList } from './MyGitHubRepoList';
+import { DeploymentStatusComponent } from './DeploymentStatusComponent';
 import { GitHubActionsComponent } from './GitHubActionsComponent';
+import { PipelineStatusComponent } from './PipelineStatusComponent';
 
 export const MyPluginPage = () => (
   <Page themeId="tool">
@@ -39,6 +39,9 @@ export const MyPluginPage = () => (
         </Grid>
         <Grid item>
           <GitHubActionsComponent />
+        </Grid>
+        <Grid item>
+          <PipelineStatusComponent />
         </Grid>
       </Grid>
     </Content>

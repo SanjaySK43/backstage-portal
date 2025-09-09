@@ -1,10 +1,11 @@
 import { createDevApp } from '@backstage/dev-utils';
-import { myPluginPlugin, MyPluginPage } from '../src/plugin';
+import { myPluginPlugin } from '../src/plugin';
+import { MyPluginPage as MyPluginPageComponent } from '../src/components/MyPluginPage';
 
 createDevApp()
   .registerPlugin(myPluginPlugin)
   .addPage({
-    element: <MyPluginPage />,
+    element: <MyPluginPageComponent />,
     title: 'Root Page',
     path: '/my-plugin',
   })
