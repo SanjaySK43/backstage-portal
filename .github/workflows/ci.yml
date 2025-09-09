@@ -42,13 +42,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build plugins
-        run: |
-          cd plugins/my-dashboard && npx backstage-cli package build
-          cd plugins/my-plugin && npx backstage-cli package build
-
       - name: Generate TypeScript declarations
         run: yarn tsc
+
+      - name: Build plugins
+        run: |
+          cd plugins/my-dashboard && npx backstage-cli package build --skip-build-dependencies
+          cd plugins/my-plugin && npx backstage-cli package build --skip-build-dependencies
 
       - name: Lint
         run: yarn lint:all || yarn lint:all
