@@ -45,8 +45,8 @@ jobs:
 
       - name: Build plugins
         run: |
-          yarn workspace @internal/plugin-my-dashboard build
-          yarn workspace @internal/plugin-my-plugin build
+          cd plugins/my-dashboard && npx backstage-cli package build
+          cd plugins/my-plugin && npx backstage-cli package build
 
       - name: Generate TypeScript declarations
         run: yarn tsc
