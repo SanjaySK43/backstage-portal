@@ -33,12 +33,22 @@ jobs:
             .yarn/cache
             .yarn/install-state.gz
             **/.eslintcache
+            plugins/*/dist
+            dist-types
           key: yarn-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             yarn-${{ runner.os }}-
 
       - name: Install dependencies
         run: yarn install --immutable
+
+      - name: Generate TypeScript declarations
+        run: yarn tsc
+
+      - name: Build plugins
+        run: |
+          yarn workspace @internal/plugin-my-dashboard build
+          yarn workspace @internal/plugin-my-plugin build
 
       - name: Lint
         run: yarn lint:all || yarn lint:all
